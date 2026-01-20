@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walentynki</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url(b.webp);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: black;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            font-family: cursive;
+            z-index: 10;
+        }
+
+        .gif-container {
+            width: 300px;
+            height: 300px;
+            margin-bottom: 20px;
+            z-index: 10;
+        }
+
+        .gif-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: cursive;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #przyciskTak {
+            background-color: #2ecc71;
+            padding: 15px 40px;
+            min-width: 150px;
+        }
+
+        #przyciskTak:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        #przyciskNie {
+            background-color: #e74c3c;
+            width: 150px;
+        }
+
+        #przyciskNie:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Zostaniesz moją walentynką?</h1>
+        
+        <div class="gif-container">
+            <img src="./a.gif" alt="Love gif">
+        </div>
+
+        <div class="buttons-container">
+            <button id="przyciskTak">Tak</button>
+            <button id="przyciskNie">Nie</button>
+        </div>
+    </div>
+
+    <script>
+        const przyciskTak = document.getElementById('przyciskTak');
+        const przyciskNie = document.getElementById('przyciskNie');
+        const container = document.querySelector('.container');
+
+        let licznikKlikow = 0;
+        let rosnie = false;
+
+        const tekstyNie = [
+            'Nie',
+            'Jesteś pewna?',
+            'Naprawdę nie?',
+            'Pomyśl jeszcze raz!',
+            'Proszę! 🥺',
+            'Nie bądź taka!',
+            'Ostatnia szansa!',
+        ];
+
+        przyciskTak.addEventListener('click', function() {
+            alert('Wiedziałem, że się zgodzisz! Kocham Cię❤️');
+        });
+
+        przyciskNie.addEventListener('click', function() {
+            licznikKlikow++;
+
+            if (licznikKlikow < tekstyNie.length) {
+                przyciskNie.textContent = tekstyNie[licznikKlikow];
+            } else {
+                przyciskNie.textContent = tekstyNie[tekstyNie.length - 1];
+            }
+
+            if (!rosnie) {
+                rosnie = true;
+                przyciskTak.classList.add('rosnacy');
+
+                setTimeout(() => {
+                    przyciskTak.classList.remove('rosnacy');
+                    rosnie = false;
+
+                    let szerokoscAktualna = przyciskTak.offsetWidth;
+                    let wysokoscAktualna = przyciskTak.offsetHeight;
+
+                    let nowaSzerokosc = szerokoscAktualna + (window.innerWidth * 0.15);
+                    let nowaWysokosc = wysokoscAktualna + (window.innerHeight * 0.15);
+
+                    przyciskTak.style.width = nowaSzerokosc + 'px';
+                    przyciskTak.style.height = nowaWysokosc + 'px';
+                    przyciskTak.style.fontSize = (1.2 + licznikKlikow * 0.3) + 'em';
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html>
